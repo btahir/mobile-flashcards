@@ -1,8 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import { Constants } from 'expo'
+import { connect } from 'react-redux'
 
-export default class MainDecks extends React.Component {
+class MainDecks extends React.Component {
 
 	state = {
 		deckData: [
@@ -76,6 +77,8 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
 });
+
+export default connect()(MainDecks)
 
 
 
