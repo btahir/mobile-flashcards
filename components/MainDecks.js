@@ -51,7 +51,7 @@ class MainDecks extends React.Component {
 
     // AsyncStorage.setItem('MobileFlashCards:decks', JSON.stringify(dummyData));
     try {
-      var value = await AsyncStorage.getItem('MobileFlashCards:decks');
+      let value = await AsyncStorage.getItem('MobileFlashCards:decks');
       if (value !== null){
         let val = JSON.parse(value)
         Object.keys(val).map((key) => {
