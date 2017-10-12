@@ -4,52 +4,51 @@ import { Constants } from 'expo'
 import { connect } from 'react-redux'
 import { StackNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
+import { getDecks } from '../utils/helpers'
 
 class MainDecks extends React.Component {
 
+  // constructor(props) {
+  //   super(props);
+  //   let v = getDecks();
+  // }
+
 	state = {
     fontLoaded: false,
-		deckData: [
-		  {
-        React: {
-  		    title: 'React',
-  		    questions: [
-  		      {
-  		        question: 'What is React?',
-  		        answer: 'A library for managing user interfaces'
-  		      },
-  		      {
-  		        question: 'Where do you make Ajax requests in React?',
-  		        answer: 'The componentDidMount lifecycle event'
-  		      }
-  		    ]
-  		  }
-      },
-		  {
-        JavaScript: {
-  		    title: 'JavaScript',
-  		    questions: [
-  		      {
-  		        question: 'What is a closure?',
-  		        answer: 'The combination of a function and the lexical environment within which that function was declared.'
-  		      }
-  		    ]
-		    }
-      }
-		]
+    deckData: [],
 	}
 
   async componentDidMount() {
-      await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
-      this.setState({ fontLoaded: true });
-    }
+      // get font
+      // await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
+      // this.setState({ fontLoaded: true });
 
-  // componentWillMount() {
-  //   await Expo.Font.loadAsync('open-sans', 'https://fonts.googleapis.com/css?family=Open+Sans');
-  // }
+      // get all decks
+      // let v = await getDecks();
+      // console.debug("componentDidMount",v);
+      // this.setState({ deckData: v });
+      let v;
+      try {
+        v = await getDecks();
+        this.setState({deckData: v})
+      } catch(e) {
+        v = 'error';
+      }
+      
+     // getDecks()
+      // .then((decks) => {
+      //   console.debug(decks)
+      //   Object.keys(decks).forEach(function(key) {
+      //       console.debug(key)
+            
+      //   });
+      // })
+      
+  }
 
 
   renderItem = (deck) => {
+    console.debug("here",deck);
     let [ name ] = Object.keys(deck.item);
     return <Decks deck={name} key={name} />
   }
@@ -57,6 +56,7 @@ class MainDecks extends React.Component {
 	render() {
     console.ignoredYellowBox = ['VirtualizedList: missing keys for items, make sure to specify a key property on each item or provide a custom keyExtractor.'];
     const deckData = this.state.deckData;
+    console.debug("render",deckData);
 
 		return (
       <View style={styles.container}>
@@ -68,9 +68,13 @@ class MainDecks extends React.Component {
         <View style={styles.addButton}>
           <TouchableOpacity>
             {this.state.fontLoaded ? (
-              <Text style={[styles.btnText,{ fontFamily: 'open-sans' }]}>Add Deck</Text>
+              <Text
+                onPress={() => this.props.navigation.navigate('AddDeck')}
+                style={[styles.btnText,{ fontFamily: 'open-sans' }]}>Add Deck</Text>
               )
-              : (<Text style={styles.btnText}>Add Deck</Text>
+              : (<Text
+                onPress={() => this.props.navigation.navigate('AddDeck')}
+                style={styles.btnText}>Add Deck</Text>
               )}
           </TouchableOpacity>
         </View>
@@ -138,6 +142,11 @@ const styles = StyleSheet.create({
     fontSize: 22,
   }
 });
+
+
+// function mapStateToProps(state) {
+//   deckData: state.getDecks()
+// }
 
 export default connect()(MainDecks)
 
