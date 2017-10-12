@@ -82,7 +82,7 @@ function Decks ({deck}) {
       <TouchableOpacity onPress={ () => alert("here")}>
         <Text style={styles.rowContent}>{deck.title}</Text>
       </TouchableOpacity>
-      <Text style={styles.deckCount}>make it longer</Text>
+      <Text style={styles.deckCount}>{deck.questions.length} Cards</Text>
     </View>
   )
 }
@@ -112,8 +112,9 @@ const styles = StyleSheet.create({
   deckCount: {
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 22,
+    fontSize: 16,
     marginLeft: 'auto',
+    color: 'gray',
   },
   addButton: {
     flexDirection: 'row',
