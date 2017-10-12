@@ -4,9 +4,8 @@ import { Constants } from 'expo'
 import { connect } from 'react-redux'
 import { StackNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
-import { getDecks } from '../utils/helpers'
 import { receiveDecks } from '../actions'
-import { fetchDecks } from '../utils/api'
+import { getDecks } from '../utils/api'
 
 class MainDecks extends React.Component {
 	state = {
@@ -31,7 +30,7 @@ class MainDecks extends React.Component {
   async _loadInitialState() {
 
     try {
-      let value = await fetchDecks();
+      let value = await getDecks();
       if (value !== null){
         let val = JSON.parse(value)
         Object.keys(val).map((key) => {

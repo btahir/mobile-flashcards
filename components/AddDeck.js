@@ -2,13 +2,9 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { AddNewDeck } from '../actions'
-import { submitDeck } from '../utils/api'
+import { saveDeckTitle } from '../utils/api'
 
 class AddDeck extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   state = {
   	input: ''
   }
@@ -25,10 +21,11 @@ class AddDeck extends React.Component {
   		questions: []
   	}
 
+  	// add new deck to store
   	this.props.dispatch(AddNewDeck(newDeck));
-
-  	submitDeck({input, newDeck});
-
+  	// save to asyncStorage
+  	saveDeckTitle({input, newDeck});
+  	// go back to Home
   	this.props.navigation.goBack();
   } 
 
