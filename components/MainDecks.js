@@ -8,38 +8,9 @@ import { getDecks } from '../utils/helpers'
 import { receiveDecks } from '../actions'
 
 class MainDecks extends React.Component {
-
-  // constructor(props) {
-  //   super(props);
-  //   let v = getDecks();
-  // }
-
 	state = {
     fontLoaded: false,
 	}
-
-      // get all decks
-      // let v = await getDecks();
-      // console.debug("componentDidMount",v);
-      // this.setState({ deckData: v });
-      // let v;
-      // try {
-      //   v = await getDecks();
-      // } catch(e) {
-      //   v = 'error';
-      // } return this.setState({deckData: v})
-    
-
-       // getDecks()
-       //  .then((decks) => {
-       //    console.debug("sasa", decks)
-       //    Object.keys(decks).forEach(function(key) {
-       //        console.debug(key)
-              
-       //    });
-       //  })
-      
-  // }
 
   componentDidMount() {
     this._getFont().done();
@@ -47,10 +18,10 @@ class MainDecks extends React.Component {
   }
 
   async _getFont() {
-      // get font
-      await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
-      this.setState({ fontLoaded: true });
-    }
+    // get font
+    await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
+    this.setState({ fontLoaded: true });
+  }
 
   async _loadInitialState() {
     const dummyData = {
@@ -77,15 +48,16 @@ class MainDecks extends React.Component {
         ],
       },
     };
+
     // AsyncStorage.setItem('MobileFlashCards:decks', JSON.stringify(dummyData));
     try {
       var value = await AsyncStorage.getItem('MobileFlashCards:decks');
       if (value !== null){
         let val = JSON.parse(value)
-        // console.debug(Object.keys(JSON.parse(value)))
         Object.keys(val).map((key) => {
           // console.debug(key, val[key])
           this.props.dispatch(receiveDecks(val[key]));
+          // using local state instead of reducx store
           // this.setState(prevState => ({
           //   deckData: [...prevState.deckData, val[key]]
           // }))
@@ -99,15 +71,13 @@ class MainDecks extends React.Component {
 
 
   renderItem = (deck) => {
-    // console.debug("inside renderItem",deck);
-    // let [ name ] = Object.keys(deck.item);
     return <Decks deck={deck.item} key={deck.item} />
   }
 
 	render() {
     console.ignoredYellowBox = ['VirtualizedList: missing keys for items, make sure to specify a key property on each item or provide a custom keyExtractor.'];
     const deckData = this.props.deckData;
-    console.log("render",deckData);
+    // console.log("render",deckData);
 
 		return (
       <View style={styles.container}>
@@ -150,7 +120,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
-    // justifyContent: 'center',
   },
   list: {
     // height: 90,
