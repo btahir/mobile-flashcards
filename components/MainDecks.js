@@ -6,6 +6,7 @@ import { StackNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { getDecks } from '../utils/helpers'
 import { receiveDecks } from '../actions'
+import { fetchDecks } from '../utils/api'
 
 class MainDecks extends React.Component {
 	state = {
@@ -17,6 +18,10 @@ class MainDecks extends React.Component {
     this._loadInitialState().done();
   }
 
+  componentWillReceiveProps(nextProps) {
+
+  }
+
   async _getFont() {
     // get font
     await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
@@ -24,34 +29,9 @@ class MainDecks extends React.Component {
   }
 
   async _loadInitialState() {
-    const dummyData = {
-      React: {
-        title: 'React',
-        questions: [
-          {
-            question: 'What is React?',
-            answer: 'A library for managing user interfaces',
-          },
-          {
-            question: 'Where do you make Ajax requests in React?',
-            answer: 'The componentDidMount lifecycle event',
-          },
-        ],
-      },
-      JavaScript: {
-        title: 'JavaScript',
-        questions: [
-          {
-            question: 'What is a closure?',
-            answer: 'The combination of a function and the lexical environment within which that function was declared.',
-          },
-        ],
-      },
-    };
 
-    // AsyncStorage.setItem('MobileFlashCards:decks', JSON.stringify(dummyData));
     try {
-      let value = await AsyncStorage.getItem('MobileFlashCards:decks');
+      let value = await fetchDecks();
       if (value !== null){
         let val = JSON.parse(value)
         Object.keys(val).map((key) => {
@@ -77,7 +57,7 @@ class MainDecks extends React.Component {
 	render() {
     console.ignoredYellowBox = ['VirtualizedList: missing keys for items, make sure to specify a key property on each item or provide a custom keyExtractor.'];
     const deckData = this.props.deckData;
-    // console.log("render",deckData);
+    // console.log("render",this.props);
 
 		return (
       <View style={styles.container}>

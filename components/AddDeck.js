@@ -29,7 +29,7 @@ class AddDeck extends React.Component {
 
   	submitDeck({input, newDeck});
 
-  	this.props.navigation.navigate('Home');
+  	this.props.navigation.goBack();
   } 
 
 	render() {
