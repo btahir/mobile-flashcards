@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { StackNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { getDecks } from '../utils/helpers'
+import { receiveDecks } from '../actions'
 
 class MainDecks extends React.Component {
 
@@ -15,13 +16,7 @@ class MainDecks extends React.Component {
 
 	state = {
     fontLoaded: false,
-    deckData: [],
 	}
-
-  // async componentDidMount() {
-      // get font
-      // await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
-      // this.setState({ fontLoaded: true });
 
       // get all decks
       // let v = await getDecks();
@@ -47,8 +42,15 @@ class MainDecks extends React.Component {
   // }
 
   componentDidMount() {
+    this._getFont().done();
     this._loadInitialState().done();
   }
+
+  async _getFont() {
+      // get font
+      await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
+      this.setState({ fontLoaded: true });
+    }
 
   async _loadInitialState() {
     const dummyData = {
@@ -75,7 +77,7 @@ class MainDecks extends React.Component {
         ],
       },
     };
-    AsyncStorage.setItem('MobileFlashCards:decks', JSON.stringify(dummyData));
+    // AsyncStorage.setItem('MobileFlashCards:decks', JSON.stringify(dummyData));
     try {
       var value = await AsyncStorage.getItem('MobileFlashCards:decks');
       if (value !== null){
@@ -83,14 +85,15 @@ class MainDecks extends React.Component {
         // console.debug(Object.keys(JSON.parse(value)))
         Object.keys(val).map((key) => {
           // console.debug(key, val[key])
-          this.setState(prevState => ({
-            deckData: [...prevState.deckData, val[key]]
-          }))
+          this.props.dispatch(receiveDecks(val[key]));
+          // this.setState(prevState => ({
+          //   deckData: [...prevState.deckData, val[key]]
+          // }))
         })
       } else {
       }
     } catch (error) {
-      console.debug("error here")
+      console.log("error here")
     }
   }
 
@@ -103,8 +106,8 @@ class MainDecks extends React.Component {
 
 	render() {
     console.ignoredYellowBox = ['VirtualizedList: missing keys for items, make sure to specify a key property on each item or provide a custom keyExtractor.'];
-    const deckData = this.state.deckData;
-    // console.debug("render",deckData);
+    const deckData = this.props.deckData;
+    console.log("render",deckData);
 
 		return (
       <View style={styles.container}>
@@ -192,11 +195,13 @@ const styles = StyleSheet.create({
 });
 
 
-// function mapStateToProps(state) {
-//   deckData: state.getDecks()
-// }
+function mapStateToProps(state) {
+  return {
+    deckData: state.deckData
+  }
+}
 
-export default connect()(MainDecks)
+export default connect(mapStateToProps)(MainDecks)
 
 
 

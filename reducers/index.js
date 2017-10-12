@@ -1,14 +1,14 @@
 
-function entries (state={}, action) {
+function decks (state={deckData: []}, action) {
 	switch(action.type) {
-		case 'RECEIVE_ENTRIES' :
+		case 'RECEIVE_DECKS' :
 		return {
 			...state,
-			...action.entries,
+			deckData: [...state.deckData, action.decks],
 		}
 		default :
 			return state
 	}
 }
 
-export default entries
+export default decks

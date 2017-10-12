@@ -4,12 +4,13 @@ import MainDecks from './components/MainDecks'
 import AddDeck from './components/AddDeck'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk';
 import reducer from './reducers'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { StackNavigator } from 'react-navigation'
 
 const store = createStore(reducer, composeWithDevTools(
-  // applyMiddleware(),
+  applyMiddleware(thunk),
   // other store enhancers if any
 ));
 
