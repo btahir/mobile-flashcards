@@ -17,10 +17,6 @@ class MainDecks extends React.Component {
     this._loadInitialState().done();
   }
 
-  componentWillReceiveProps(nextProps) {
-
-  }
-
   async _getFont() {
     // get font
     await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
@@ -28,19 +24,15 @@ class MainDecks extends React.Component {
   }
 
   async _loadInitialState() {
-
     try {
       let value = await getDecks();
+      let holdArray = [];
       if (value !== null){
         let val = JSON.parse(value)
         Object.keys(val).map((key) => {
-          // console.debug(key, val[key])
-          this.props.dispatch(receiveDecks(val[key]));
-          // using local state instead of reducx store
-          // this.setState(prevState => ({
-          //   deckData: [...prevState.deckData, val[key]]
-          // }))
+          holdArray.push(val[key]);
         })
+        this.props.dispatch(receiveDecks(holdArray));
       } else {
       }
     } catch (error) {

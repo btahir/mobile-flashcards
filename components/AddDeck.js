@@ -23,7 +23,7 @@ class AddDeck extends React.Component {
 
   	// add new deck to store
   	this.props.dispatch(AddNewDeck(newDeck));
-  	// save to asyncStorage
+  	// save to AsyncStorage
   	saveDeckTitle({input, newDeck});
   	// go back to Home
   	this.props.navigation.goBack();

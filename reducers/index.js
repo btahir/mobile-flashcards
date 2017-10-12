@@ -9,7 +9,7 @@ function decks (state={deckData: []}, action) {
 		case RECEIVE_DECKS :
 		return {
 			...state,
-			deckData: [...state.deckData, action.decks],
+			deckData: action.decks,
 		}
 		case ADD_DECK :
 		return {
