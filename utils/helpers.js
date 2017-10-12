@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 export const DECK_STORAGE_KEY = 'MobileFlashCards:decks';
 
 export function getDecks() {
-  let results = '';
 
   const dummyData = {
     React: {
@@ -31,20 +30,6 @@ export function getDecks() {
     },
   };
 
-  // AsyncStorage.getItem(DECK_STORAGE_KEY) !== null 
-  // ? AsyncStorage.getItem(DECK_STORAGE_KEY)
-  // 	.then(res => res.json)
-  // 	.then((data) => {
-  // 		return data
-  // 	})
-  // : AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(deckData))
-  // 	.then(AsyncStorage.getItem(DECK_STORAGE_KEY))
-  // 	.then(res => res.json)
-  // 	.then((data) => {
-  // 		console.debug(data)
-  // 		return data
-  // 	})
-
   AsyncStorage.getItem(DECK_STORAGE_KEY, (err, result) => {
     if (result !== null) {
       console.debug('Data Found', result);
@@ -57,10 +42,4 @@ export function getDecks() {
     }
   });
 
-  // AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(dummyData));
-  // AsyncStorage.getItem(DECK_STORAGE_KEY);
-
-  // console.debug(JSON.stringify(deckData));
-
-  // return dummyData;
 }

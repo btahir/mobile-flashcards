@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from 'react-native'
 import { Constants } from 'expo'
 import { connect } from 'react-redux'
 import { StackNavigator } from 'react-navigation'
@@ -18,7 +18,7 @@ class MainDecks extends React.Component {
     deckData: [],
 	}
 
-  async componentDidMount() {
+  // async componentDidMount() {
       // get font
       // await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
       // this.setState({ fontLoaded: true });
@@ -27,36 +27,84 @@ class MainDecks extends React.Component {
       // let v = await getDecks();
       // console.debug("componentDidMount",v);
       // this.setState({ deckData: v });
-      let v;
-      try {
-        v = await getDecks();
-        this.setState({deckData: v})
-      } catch(e) {
-        v = 'error';
+      // let v;
+      // try {
+      //   v = await getDecks();
+      // } catch(e) {
+      //   v = 'error';
+      // } return this.setState({deckData: v})
+    
+
+       // getDecks()
+       //  .then((decks) => {
+       //    console.debug("sasa", decks)
+       //    Object.keys(decks).forEach(function(key) {
+       //        console.debug(key)
+              
+       //    });
+       //  })
+      
+  // }
+
+  componentDidMount() {
+    this._loadInitialState().done();
+  }
+
+  async _loadInitialState() {
+    const dummyData = {
+      React: {
+        title: 'React',
+        questions: [
+          {
+            question: 'What is React?',
+            answer: 'A library for managing user interfaces',
+          },
+          {
+            question: 'Where do you make Ajax requests in React?',
+            answer: 'The componentDidMount lifecycle event',
+          },
+        ],
+      },
+      JavaScript: {
+        title: 'JavaScript',
+        questions: [
+          {
+            question: 'What is a closure?',
+            answer: 'The combination of a function and the lexical environment within which that function was declared.',
+          },
+        ],
+      },
+    };
+    AsyncStorage.setItem('MobileFlashCards:decks', JSON.stringify(dummyData));
+    try {
+      var value = await AsyncStorage.getItem('MobileFlashCards:decks');
+      if (value !== null){
+        let val = JSON.parse(value)
+        // console.debug(Object.keys(JSON.parse(value)))
+        Object.keys(val).map((key) => {
+          // console.debug(key, val[key])
+          this.setState(prevState => ({
+            deckData: [...prevState.deckData, val[key]]
+          }))
+        })
+      } else {
       }
-      
-     // getDecks()
-      // .then((decks) => {
-      //   console.debug(decks)
-      //   Object.keys(decks).forEach(function(key) {
-      //       console.debug(key)
-            
-      //   });
-      // })
-      
+    } catch (error) {
+      console.debug("error here")
+    }
   }
 
 
   renderItem = (deck) => {
-    console.debug("here",deck);
-    let [ name ] = Object.keys(deck.item);
-    return <Decks deck={name} key={name} />
+    // console.debug("inside renderItem",deck);
+    // let [ name ] = Object.keys(deck.item);
+    return <Decks deck={deck.item} key={deck.item} />
   }
 
 	render() {
     console.ignoredYellowBox = ['VirtualizedList: missing keys for items, make sure to specify a key property on each item or provide a custom keyExtractor.'];
     const deckData = this.state.deckData;
-    console.debug("render",deckData);
+    // console.debug("render",deckData);
 
 		return (
       <View style={styles.container}>
@@ -88,7 +136,7 @@ function Decks ({deck}) {
   return (
     <View style={styles.row}>
       <TouchableOpacity onPress={ () => alert("here")}>
-        <Text style={styles.rowContent}>{deck}</Text>
+        <Text style={styles.rowContent}>{deck.title}</Text>
       </TouchableOpacity>
       <Text style={styles.deckCount}>make it longer</Text>
     </View>
