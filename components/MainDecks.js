@@ -77,7 +77,9 @@ class MainDecks extends React.Component {
 function Decks ({deck, navProps}) {
   return (
     <View style={styles.row}>
-      <TouchableOpacity onPress={() => navProps.navigate('DeckDetail')}>
+      <TouchableOpacity onPress={() => 
+        navProps.navigate('DeckDetail',
+          {deck: deck})}>
         <Text style={styles.rowContent}>{deck.title}</Text>
       </TouchableOpacity>
       <Text style={styles.deckCount}>{deck.questions.length} Cards</Text>
