@@ -53,11 +53,19 @@ class MainDecks extends React.Component {
 		return (
       <View style={styles.container}>
         <Text style={styles.title}>Mobile Flash Cards</Text>
-        <FlatList
-          style={styles.list}
-          data={deckData}
-          renderItem={this.renderItem}
-        />
+        {console.log(deckData)}
+        {deckData.length === 0 || deckData === undefined
+          ? (
+            <View style={styles.container}><Text style={styles.title}>You Have No Decks</Text></View>
+          )
+          : (
+            <FlatList
+              style={styles.list}
+              data={deckData}
+              renderItem={this.renderItem}
+            />
+          )
+        }
         <View style={styles.addButton}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('AddDeck')}>
             {this.state.fontLoaded ? (
@@ -95,7 +103,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#fff',
   },
   list: {
-    // height: 90,
+    marginTop: Constants.statusBarHeight,
   },
   title: {
     alignItems: 'center',
