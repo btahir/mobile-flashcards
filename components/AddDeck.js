@@ -9,6 +9,12 @@ class AddDeck extends React.Component {
   	input: ''
   }
 
+  static navigationOptions = () => {
+  	return {
+  		title: 'Add Card'
+  	}
+  }
+
   handleTextChange = (input) => {
   	this.setState({
   		input,

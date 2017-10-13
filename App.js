@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View } from 'react-native'
 import MainDecks from './components/MainDecks'
 import AddDeck from './components/AddDeck'
+import DeckDetail from './components/DeckDetail'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
@@ -20,6 +21,15 @@ const MainNavigator = StackNavigator({
   },
   AddDeck: {
     screen: AddDeck,
+    navigationOptions: {
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'black',
+      }
+    },
+  },
+  DeckDetail: {
+    screen: DeckDetail,
   },
 })
 

@@ -42,7 +42,7 @@ class MainDecks extends React.Component {
 
 
   renderItem = (deck) => {
-    return <Decks deck={deck.item} key={deck.item} />
+    return <Decks deck={deck.item} navProps={this.props.navigation}  key={deck.item} />
   }
 
 	render() {
@@ -74,10 +74,10 @@ class MainDecks extends React.Component {
 
 }
 
-function Decks ({deck}) {
+function Decks ({deck, navProps}) {
   return (
     <View style={styles.row}>
-      <TouchableOpacity onPress={ () => alert("here")}>
+      <TouchableOpacity onPress={() => navProps.navigate('DeckDetail')}>
         <Text style={styles.rowContent}>{deck.title}</Text>
       </TouchableOpacity>
       <Text style={styles.deckCount}>{deck.questions.length} Cards</Text>
