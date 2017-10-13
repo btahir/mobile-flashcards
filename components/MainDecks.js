@@ -52,6 +52,7 @@ class MainDecks extends React.Component {
 
 		return (
       <View style={styles.container}>
+        <Text style={styles.title}>Mobile Flash Cards</Text>
         <FlatList
           style={styles.list}
           data={deckData}
@@ -91,9 +92,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
+    // backgroundColor: '#fff',
   },
   list: {
     // height: 90,
+  },
+  title: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   row: {
     flex: 1,

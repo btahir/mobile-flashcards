@@ -1,3 +1,8 @@
+        <StatusBar
+         backgroundColor="blue"
+         barStyle="light-content"
+        />
+
 
     // const dummyData = {
     //   React: {
