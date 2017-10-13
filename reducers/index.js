@@ -11,7 +11,7 @@ function decks (state={deckData: []}, action) {
 		case RECEIVE_DECKS :
 		return {
 			...state,
-			deckData: state.deckData.concat(action.decks),
+			deckData: [...state.deckData, ...action.decks],
 		}
 		case ADD_DECK :
 		return {
