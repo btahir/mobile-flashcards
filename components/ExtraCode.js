@@ -43,4 +43,17 @@
     //   console.log("error here")
     // }
 
-    
+
+
+                    //     <TouchableOpacity 
+                    //     style={styles.addBtn}
+                    //     onPress={() => this.props.navigation.navigate('AddCard')}
+                    //     >
+                    //     <Text style={styles.addBtnText}>Add Card</Text>
+                    // </TouchableOpacity>
+                    // <TouchableOpacity 
+                    //     style={styles.addBtn}
+                    //     onPress={() => this.props.navigation.navigate('AddCard')}
+                    //     >
+                    //     <Text style={styles.addBtnText}>Start Quiz</Text>
+                    // </TouchableOpacity>

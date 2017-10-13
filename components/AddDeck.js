@@ -11,7 +11,7 @@ class AddDeck extends React.Component {
 
   static navigationOptions = () => {
   	return {
-  		title: 'Add Card'
+  		title: 'Add Deck'
   	}
   }
 

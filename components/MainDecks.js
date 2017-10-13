@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    deckData: state.deckData
+    deckData: state.decks.deckData
   }
 }
 

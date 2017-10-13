@@ -1,4 +1,5 @@
 import React from 'react'
+import AddCard from './AddCard'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -17,14 +18,6 @@ class DeckDetail extends React.Component {
 				<View style={styles.detailView}>
 					<Text style={styles.title}>{deck.title}</Text>
 					<Text style={styles.subtitle}>{deck.questions.length} Cards</Text>
-				</View>
-				<View style={styles.btnView}>
-					<TouchableOpacity style={styles.addBtn}>
-						<Text style={styles.addBtnText}>Add Card</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.addBtn}>
-						<Text style={styles.addBtnText}>Start Quiz</Text>
-					</TouchableOpacity>
 				</View>
 			</View>
 
@@ -53,9 +46,6 @@ const styles = StyleSheet.create({
 	},
 	btnView: {
 		flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginBottom: 120,
     padding: 10,
 	},
   addBtn: {
