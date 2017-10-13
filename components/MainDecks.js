@@ -53,7 +53,6 @@ class MainDecks extends React.Component {
 		return (
       <View style={styles.container}>
         <Text style={styles.title}>Mobile Flash Cards</Text>
-        {console.log(deckData)}
         {deckData.length === 0 || deckData === undefined
           ? (
             <View style={styles.container}><Text style={styles.title}>You Have No Decks</Text></View>
