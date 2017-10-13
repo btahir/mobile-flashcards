@@ -16,17 +16,20 @@ class AddDeck extends React.Component {
   }
 
   sbmtDeck = (input) => {
-  	const newDeck = {
-  		title: input,
-  		questions: []
-  	}
-
-  	// add new deck to store
-  	this.props.dispatch(AddNewDeck(newDeck));
-  	// save to AsyncStorage
-  	saveDeckTitle({input, newDeck});
-  	// go back to Home
-  	this.props.navigation.goBack();
+  	if(input === '') {
+  		alert("Please Enter Deck Name");
+  	} else {
+	  	const newDeck = {
+	  		title: input,
+	  		questions: []
+	  	}
+	  	// add new deck to store
+	  	this.props.dispatch(AddNewDeck(newDeck));
+	  	// save to AsyncStorage
+	  	saveDeckTitle({input, newDeck});
+	  	// go back to Home
+	  	this.props.navigation.goBack();
+	  }
   } 
 
 	render() {
@@ -39,11 +42,8 @@ class AddDeck extends React.Component {
 					onChangeText={this.handleTextChange}
 					value={input}
 				/>
-        <TouchableOpacity style={styles.sbmtButton}>
-          <Text
-            onPress={() => this.sbmtDeck(input)}
-            style={styles.btnText}>Submit
-          </Text>
+        <TouchableOpacity onPress={() => this.sbmtDeck(input)} style={styles.sbmtButton}>
+          <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
 			</View>
 		)

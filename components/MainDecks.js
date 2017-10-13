@@ -58,14 +58,12 @@ class MainDecks extends React.Component {
           renderItem={this.renderItem}
         />
         <View style={styles.addButton}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('AddDeck')}>
             {this.state.fontLoaded ? (
-              <Text
-                onPress={() => this.props.navigation.navigate('AddDeck')}
+              <Text             
                 style={[styles.btnText,{ fontFamily: 'open-sans' }]}>Add Deck</Text>
               )
               : (<Text
-                onPress={() => this.props.navigation.navigate('AddDeck')}
                 style={styles.btnText}>Add Deck</Text>
               )}
           </TouchableOpacity>
