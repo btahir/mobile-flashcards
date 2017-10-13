@@ -79,7 +79,6 @@ class MainDecks extends React.Component {
       </View>
 		)
 	}
-
 }
 
 function Decks ({deck, navProps}) {

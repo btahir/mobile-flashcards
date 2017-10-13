@@ -1,4 +1,5 @@
 export const RECEIVE_DECKS='RECEIVE_DECKS';
+// export const RECEIVE_ONE_DECK='RECEIVE_ONE_DECK';
 export const ADD_DECK='ADD_DECK';
 export const ADD_CARD='ADD_CARD';
 
@@ -9,6 +10,13 @@ export function receiveDecks(decks) {
 	}
 }
 
+// export function receiveOneDeck(title) {
+// 	return {
+// 		type: RECEIVE_ONE_DECK,
+// 		title,
+// 	}
+// }
+
 export function AddNewDeck(deck) {
 	return {
 		type: ADD_DECK,
@@ -16,9 +24,11 @@ export function AddNewDeck(deck) {
 	}
 }
 
-export function AddCard(card) {
+export function AddNewCard({title, question, answer}) {
 	return {
 		type: ADD_CARD,
-		card,
+		title,
+		question,
+		answer,
 	}
 }

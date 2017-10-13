@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
 import { connect } from 'react-redux'
+import { AddNewCard } from '../actions'
 
 class AddCard extends React.Component {
 
@@ -27,18 +28,19 @@ class AddCard extends React.Component {
   	})
   }
 
-  sbmtCard = (question, answer) => {
+  sbmtCard = (title, question, answer) => {
   	if(question === '' || answer === '') {
   		alert("Please Enter Question and Answer");
   	} else {
 	  	const newCard = {
+	  		title,
 	  		question,
 	  		answer,
 	  	}
 
 	  	console.log(newCard);
 	  	// add new deck to store
-	  	// this.props.dispatch(AddNewDeck(newDeck));
+	  	this.props.dispatch(AddNewCard(newCard));
 	  	// save to AsyncStorage
 	  	// saveDeckTitle({input, newDeck});
 	  	// go back to Deck
@@ -49,6 +51,7 @@ class AddCard extends React.Component {
 	render() {
 		const { question } = this.state;
 		const { answer } = this.state;
+		const { title } = this.props.navigation.state.params.deck;
 		return (
 			<View style={styles.container}>
 				<View>
@@ -63,7 +66,7 @@ class AddCard extends React.Component {
 						value={answer}
 					/>
 				</View>
-        <TouchableOpacity onPress={() => this.sbmtCard(question, answer)} style={styles.sbmtButton}>
+        <TouchableOpacity onPress={() => this.sbmtCard(title, question, answer)} style={styles.sbmtButton}>
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
 			</View>

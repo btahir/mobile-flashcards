@@ -2,6 +2,7 @@ import React from 'react'
 import AddCard from './AddCard'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+// import { receiveOneDeck } from '../actions'
 
 class DeckDetail extends React.Component {
 
@@ -10,6 +11,11 @@ class DeckDetail extends React.Component {
   		title: navigation.state.params.deck.title
   	}
   }
+
+  // componentDidMount() {
+  // 	// filter one relevant deck
+  // 	this.props.dispatch(receiveOneDeck(this.props.navigation.state.params.deck.title));
+  // }
 
 	render() {
 		const { deck } = this.props.navigation.state.params;
