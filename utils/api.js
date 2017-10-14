@@ -7,6 +7,15 @@ export function saveDeckTitle ({ input, newDeck }) {
   }))
 }
 
+export function saveNewCard ({ title, newDeck }) {
+  return AsyncStorage.getItem(DECK_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results)
+      data[title] = newDeck
+      AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
+    })
+}
+
 export function getDecks () {
 	return AsyncStorage.getItem(DECK_STORAGE_KEY)
 }

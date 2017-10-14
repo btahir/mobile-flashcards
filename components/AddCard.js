@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { AddNewCard } from '../actions'
+import { saveNewCard } from '../utils/api'
 
 class AddCard extends React.Component {
 
@@ -38,11 +39,21 @@ class AddCard extends React.Component {
 	  		answer,
 	  	}
 
-	  	console.log(newCard);
+	  	let newDeck = ''
+	  	let key = ''
+
+	  	this.props.deckData.map((deck,index) => {
+	  		if(deck.title === title) {
+	  			newDeck = {title: deck.title, questions: deck.questions.concat({question,answer})};
+		  		key = index;
+	  		}
+	  	});
+
+	  	// console.log(newDeck, key);
 	  	// add new deck to store
 	  	this.props.dispatch(AddNewCard(newCard));
 	  	// save to AsyncStorage
-	  	// saveDeckTitle({input, newDeck});
+	  	saveNewCard({title, newDeck});
 	  	// go back to Deck
 	  	this.props.navigation.goBack();
 	  }
@@ -113,4 +124,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(AddCard)
+function mapStateToProps(state) {
+  return {
+    deckData: state.decks.deckData
+  }
+}
+
+export default connect(mapStateToProps)(AddCard)

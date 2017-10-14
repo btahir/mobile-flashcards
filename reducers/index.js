@@ -27,10 +27,11 @@ function decks (state={deckData: []}, action) {
 		case ADD_CARD :
 		return {
 			...state,
-			deckData: {
-				...state.deckData,
-				...state.deckData.filter(deck => deck.title === action.title),
-			},
+			deckData: state.deckData.map(deck => {
+				return deck.title === action.title 
+				? {title: deck.title, questions: deck.questions.concat({question:action.question, answer: action.answer})} 
+				: {...deck}
+			})
 		}
 		default :
 			return state
