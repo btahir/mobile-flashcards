@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import QuizCard from './QuizCard'
 
 class Quiz extends React.Component {
 
@@ -18,10 +19,17 @@ class Quiz extends React.Component {
   	return this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
   }
 
+  renderQuizCard(item) {
+  	console.log(item);
+  	return (
+  		<Text>{item.question}</Text>
+  	)
+  }
+
 
 	render() {
 		const deck = this.getDeck();
-		console.log(deck);
+		// console.log(deck);
 		return(
 			<View style={styles.container}>
 				{deck.questions.length === 0 ? 
@@ -32,6 +40,10 @@ class Quiz extends React.Component {
 					<View>
 						<Text style={styles.counterText}>{this.state.counter}/{deck.questions.length}</Text>
 						<Text style={styles.warnText}>{deck.questions[this.state.counter - 1].question}</Text>
+						<QuizCard
+							data={deck.questions}
+							renderCard={this.renderQuizCard}
+						/>
 						<TouchableOpacity onPress={() => this.setState((prevState) => ({counter: prevState.counter + 1}))} ><Text>TEST</Text></TouchableOpacity>
 					</View>
 					)
