@@ -49,7 +49,7 @@ class AddDeck extends React.Component {
 					value={input}
 				/>
         <TouchableOpacity onPress={() => this.sbmtDeck(input)} style={styles.sbmtButton}>
-          <Text style={styles.btnText}>Submit</Text>
+          <Text style={styles.btnText}>Add Deck</Text>
         </TouchableOpacity>
 			</View>
 		)
