@@ -2,6 +2,7 @@ import React from 'react'
 import AddCard from './AddCard'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 // import { receiveOneDeck } from '../actions'
 
 class DeckDetail extends React.Component {
@@ -24,6 +25,11 @@ class DeckDetail extends React.Component {
 				<View style={styles.detailView}>
 					<Text style={styles.title}>{deck.title}</Text>
 					<Text style={styles.subtitle}>{deck.questions.length} Cards</Text>
+					<View style={styles.btnView}>
+						<TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.dispatch(NavigationActions.back())} >
+							<Text style={styles.btnText}>Back To All Decks</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
 			</View>
 
@@ -52,10 +58,9 @@ const styles = StyleSheet.create({
 		color: 'gray',
 	},
 	btnView: {
-		flex: 1,
-    padding: 10,
+    padding: 20,
 	},
-  addBtn: {
+  btn: {
     backgroundColor: 'black',
     padding: 10,
     borderRadius: 7,
@@ -65,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-   addBtnText: {
+   btnText: {
     color: 'white',
     fontSize: 22,
   },
