@@ -4,6 +4,11 @@ import { connect } from 'react-redux'
 
 class Quiz extends React.Component {
 
+  static navigationOptions = ({ navigation }) => {
+  	return {
+  		title: 'Start Quiz'
+  	}
+  }
 
 
 	render() {
