@@ -3,7 +3,7 @@
          barStyle="light-content"
         />
 
-
+                        <TouchableOpacity onPress={() => this.setState((prevState) => ({counter: prevState.counter + 1}))} ><Text>TEST</Text></TouchableOpacity>
     // const dummyData = {
     //   React: {
     //     title: 'React',

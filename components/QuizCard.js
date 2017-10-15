@@ -1,10 +1,14 @@
 import React from 'react'
 import { 
-	Text, 
+	Text,
+	StyleSheet, 
 	View, 
 	Animated, 
 	PanResponder,
-	Dimensions } from 'react-native'
+	Dimensions,
+	LayoutAnimation,
+	UIManager,
+} from 'react-native'
 import { connect } from 'react-redux'
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -12,6 +16,12 @@ const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
 const SWIPE_OUT_DURATION = 250;
 
 class QuizCard extends React.Component {
+
+	static defaultProps = {
+		onSwipeRight: () => {},
+		onSwipeLeft: () => {},
+	}
+
 	constructor(props) {
 		super(props);
 
@@ -33,7 +43,20 @@ class QuizCard extends React.Component {
 			},
 		})
 
-		this.state = { panResponder, position };
+		this.state = { panResponder, position, counter: 0 };
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.data !== this.props.data) {
+			this.setState({ counter: 0 });
+		}
+	}
+
+	componentWillUpdate() {
+		UIManager.setLayoutAnimationEnabledExperimental &&
+		UIManager.setLayoutAnimationEnabledExperimental(true);
+
+		LayoutAnimation.spring();
 	}
 
 	forceSwipe(direction) {
@@ -45,9 +68,12 @@ class QuizCard extends React.Component {
 	}
 
 	onSwipeComplete(direction) {
-		const { onSwipeRight, onSwipeLeft } = this.props;
+		const { onSwipeRight, onSwipeLeft, data } = this.props;
+		const item = data[this.state.index]
 
-		direction === 'right' ? onSwipeRight() : onSwipeLeft();
+		direction === 'right' ? onSwipeRight(item) : onSwipeLeft(item);
+		this.state.position.setValue({ x: 0, y: 0});
+		this.setState((prevState) => ({counter: prevState.counter + 1}));
 
 
 	}
@@ -72,28 +98,53 @@ class QuizCard extends React.Component {
 	}
 
 	renderCards() {
+		if(this.state.counter >= this.props.data.length) {
+			return this.props.renderNoMoreCards();
+		}
+
 		return this.props.data.map((item,index) => {
-			if(index === 0) {
+			if(index < this.state.counter) {
+				return null;
+			} else if(index === this.state.counter) {
 				return (<Animated.View
 									key={index}
-									style={this.getCardStyle()}
+									style={[this.getCardStyle(),styles.getCardStyle]}
 									{...this.state.panResponder.panHandlers}
 								>{this.props.renderCard(item)}
 								</Animated.View>
 				);
 			}
-			return this.props.renderCard(item);
-		});
+			return (
+				<Animated.View 
+					key={index} 
+					style={[styles.cardStyle, { top: 10 * (index - this.state.counter) }]}
+				>
+					{this.props.renderCard(item)}
+				</Animated.View>
+			)
+		}).reverse();
 	}
 
 
 	render() {
 		return (
-			<View>
+			<View style={styles.container}>
 				{this.renderCards()}
 			</View>
 		)
 	}
 }
+
+const styles = StyleSheet.create({
+	// container: {
+	// 	alignItems: 'center',
+	// 	justifyContent: 'center',
+	// },
+	cardStyle: {
+		position: 'absolute',
+		width: SCREEN_WIDTH,
+
+	}
+})
 
 export default connect()(QuizCard)

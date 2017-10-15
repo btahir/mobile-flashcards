@@ -35,6 +35,16 @@ class Quiz extends React.Component {
   	)
   }
 
+  renderNoMoreCards() {
+  	return (
+  		<Card title="Finished Quiz!">
+  			<Text style={{ marginBottom:10 }}>
+  				You Scored XX%!
+  			</Text>
+  		</Card>
+  	)
+  }
+
 
 	render() {
 		const deck = this.getDeck();
@@ -52,8 +62,8 @@ class Quiz extends React.Component {
 						<QuizCard
 							data={deck.questions}
 							renderCard={this.renderQuizCard}
+							renderNoMoreCards={this.renderNoMoreCards}
 						/>
-						<TouchableOpacity onPress={() => this.setState((prevState) => ({counter: prevState.counter + 1}))} ><Text>TEST</Text></TouchableOpacity>
 					</View>
 					)
 				}
