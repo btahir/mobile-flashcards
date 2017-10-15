@@ -18,7 +18,7 @@ const store = createStore(reducer, composeWithDevTools(
 ));
 
 const Tabs = TabNavigator({
-  Home: {
+  TabHome: {
     screen: DeckDetail,
     navigationOptions: {
       tabBarLabel: 'Deck',
@@ -62,13 +62,19 @@ const Tabs = TabNavigator({
       },
       shadowRadius: 6,
       shadowOpacity: 1
-    }
-  }
+    },
+  },
 })
 
 const MainNavigator = StackNavigator({
   Home: {
     screen: MainDecks,
+    navigationOptions: {
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'black',
+      },
+    },
   },
   AddDeck: {
     screen: AddDeck,

@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     alignContent: 'center',
+    backgroundColor: 'white',
 	},
 	text: {
 		fontSize: 36,

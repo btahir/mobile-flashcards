@@ -97,8 +97,8 @@ function Decks ({deck, navProps}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
-    // backgroundColor: '#fff',
+    // marginTop: Constants.statusBarHeight,
+    backgroundColor: 'white',
   },
   list: {
     marginTop: Constants.statusBarHeight,
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 20,
   },
   row: {
     flex: 1,

@@ -8,17 +8,17 @@ class DeckDetail extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
   	return {
-  		title: navigation.state.params.deck.title
+  		title: navigation.state.params.deck.title,
   	}
   }
 
-  // componentDidMount() {
-  // 	// filter one relevant deck
-  // 	this.props.dispatch(receiveOneDeck(this.props.navigation.state.params.deck.title));
-  // }
+  getDeck() {
+  	return this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
+  }
+
 
 	render() {
-		const { deck } = this.props.navigation.state.params;
+		const deck = this.getDeck();
 		return (
 			<View style={styles.container}>
 				<View style={styles.detailView}>
@@ -34,7 +34,8 @@ class DeckDetail extends React.Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
+		backgroundColor: 'white',
 	},
 	detailView: {
 		flex: 1,
@@ -70,4 +71,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(DeckDetail)
+function mapStateToProps(state) {
+  return {
+    deckData: state.decks.deckData
+  }
+}
+
+export default connect(mapStateToProps)(DeckDetail)
