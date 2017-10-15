@@ -3,6 +3,7 @@ import { Text, View } from 'react-native'
 import MainDecks from './components/MainDecks'
 import AddDeck from './components/AddDeck'
 import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 import DeckDetail from './components/DeckDetail'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
@@ -33,7 +34,7 @@ const Tabs = TabNavigator({
     },
   },
   Quiz: {
-    screen: AddCard,
+    screen: Quiz,
     navigationOptions: {
       tabBarLabel: 'Start Quiz',
       tabBarIcon: <MaterialIcons name='question-answer' size={30} color={'gray'} />
