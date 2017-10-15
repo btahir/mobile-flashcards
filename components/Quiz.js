@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 class Quiz extends React.Component {
@@ -10,13 +10,33 @@ class Quiz extends React.Component {
   	}
   }
 
+  state = {
+  	counter: 1,
+  }
+
+  getDeck() {
+  	return this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
+  }
+
 
 	render() {
-		return (
+		const deck = this.getDeck();
+		console.log(deck);
+		return(
 			<View style={styles.container}>
-				<Text>sajsal</Text>
+				{deck.questions.length === 0 ? 
+					(	<View style={styles.altContainer}>
+						<Text style={styles.warnText}>You need to add at least one card to start the quiz!</Text>
+						</View>)
+				: (
+					<View>
+						<Text style={styles.counterText}>{this.state.counter}/{deck.questions.length}</Text>
+						<Text style={styles.warnText}>{deck.questions[this.state.counter - 1].question}</Text>
+						<TouchableOpacity onPress={() => this.setState((prevState) => ({counter: prevState.counter + 1}))} ><Text>TEST</Text></TouchableOpacity>
+					</View>
+					)
+				}
 			</View>
-
 		)
 	}
 }
@@ -26,7 +46,25 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: 'white',
 	},
-
+	altContainer: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',	
+	},
+	warnText: {
+		textAlign: 'center',
+		fontSize: 36,
+	},
+	counterText: {
+		fontSize: 24,
+		padding: 8,
+	},
 })
 
-export default connect()(Quiz)
+function mapStateToProps(state) {
+  return {
+    deckData: state.decks.deckData
+  }
+}
+
+export default connect(mapStateToProps)(Quiz)
