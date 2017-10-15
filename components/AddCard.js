@@ -66,19 +66,22 @@ class AddCard extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View>
+					<Text style={styles.text}>Add Your Question</Text>
 					<TextInput
 						style={styles.textInput}
 						onChangeText={this.handleQuestion}
 						value={question}
 					/>
+					<Text style={styles.text}>Add Your Answer</Text>
 					<TextInput
-						style={styles.textInput}
+						multiline={true}
+						style={[styles.textInput, {height: 100}]}
 						onChangeText={this.handleAnswer}
 						value={answer}
 					/>
 				</View>
         <TouchableOpacity onPress={() => this.sbmtCard(title, question, answer)} style={styles.sbmtButton}>
-          <Text style={styles.btnText}>Submit</Text>
+          <Text style={styles.btnText}>Add Question</Text>
         </TouchableOpacity>
 			</View>
 		)
@@ -95,16 +98,21 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		fontSize: 36,
-		flexWrap: 'wrap',
-		textAlign: 'center',
+		textAlign: 'auto',
+		marginTop: 50,
+		marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
 	},
 	textInput: {
-		width: 200,
+		fontSize: 24,
+		width: 'auto',
 		height: 40,
 		padding: 8,
+		borderRadius: 7,
 		borderWidth: 1,
-		margin: 50,
 		borderColor: 'gray',
+		marginBottom: 50,
 	},
   sbmtButton: {
     flexDirection: 'row',
