@@ -12,21 +12,17 @@ class Quiz extends React.Component {
   	}
   }
 
-  state = {
-  	counter: 1,
-  }
-
   getDeck() {
   	return this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
   }
 
-  renderQuizCard(item) {
+  renderQuizCard(item, index, totalLength) {
   	return (
   		<Card
   			key={item.question}
-  			title={item.question}
+  			title={`${String(index)}/${String(totalLength)}`}
   		>
-  			<Text>more text here</Text>
+  			<Text style={{ marginBottom:10 }}>more text here</Text>
   			<Button
   				title={item.question}
   				backgroundColor="#03A9F4"
@@ -38,7 +34,7 @@ class Quiz extends React.Component {
   renderNoMoreCards() {
   	return (
   		<Card title="Finished Quiz!">
-  			<Text style={{ marginBottom:10 }}>
+  			<Text style={{ marginBottom:10, textAlign: 'center' }}>
   				You Scored XX%!
   			</Text>
   		</Card>
@@ -53,12 +49,10 @@ class Quiz extends React.Component {
 			<View style={styles.container}>
 				{deck.questions.length === 0 ? 
 					(	<View style={styles.altContainer}>
-						<Text style={styles.warnText}>You need to add at least one card to start the quiz!</Text>
+						<Text style={styles.mainText}>You need to add at least one card to start the quiz!</Text>
 						</View>)
 				: (
-					<View>
-						<Text style={styles.counterText}>{this.state.counter}/{deck.questions.length}</Text>
-						<Text style={styles.warnText}>{deck.questions[this.state.counter - 1].question}</Text>
+					<View style={styles.cardView}>
 						<QuizCard
 							data={deck.questions}
 							renderCard={this.renderQuizCard}
@@ -82,13 +76,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',	
 	},
-	warnText: {
+	mainText: {
 		textAlign: 'center',
 		fontSize: 36,
 	},
-	counterText: {
-		fontSize: 24,
-		padding: 8,
+	cardView: {
+		marginTop: 20,
 	},
 })
 

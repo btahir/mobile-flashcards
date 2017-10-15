@@ -110,7 +110,7 @@ class QuizCard extends React.Component {
 									key={index}
 									style={[this.getCardStyle(),styles.getCardStyle]}
 									{...this.state.panResponder.panHandlers}
-								>{this.props.renderCard(item)}
+								>{this.props.renderCard(item,index+1, this.props.data.length)}
 								</Animated.View>
 				);
 			}
