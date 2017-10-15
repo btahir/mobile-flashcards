@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import QuizCard from './QuizCard'
+import { Card, Button } from 'react-native-elements'
 
 class Quiz extends React.Component {
 
@@ -20,9 +21,17 @@ class Quiz extends React.Component {
   }
 
   renderQuizCard(item) {
-  	console.log(item);
   	return (
-  		<Text>{item.question}</Text>
+  		<Card
+  			key={item.question}
+  			title={item.question}
+  		>
+  			<Text>more text here</Text>
+  			<Button
+  				title={item.question}
+  				backgroundColor="#03A9F4"
+  			/>
+  		</Card>
   	)
   }
 
