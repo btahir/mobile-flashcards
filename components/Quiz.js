@@ -13,12 +13,20 @@ class Quiz extends React.Component {
 
 	render() {
 		return (
-			<View>
+			<View style={styles.container}>
 				<Text>sajsal</Text>
 			</View>
 
 		)
 	}
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: 'white',
+	},
+
+})
 
 export default connect()(Quiz)
