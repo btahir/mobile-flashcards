@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native'
-import { DECK_STORAGE_KEY } from './helpers'
+
+export const DECK_STORAGE_KEY = 'MobileFlashCards:decks';
 
 export function saveDeckTitle ({ input, newDeck }) {
   return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
