@@ -33,7 +33,7 @@ function decks (state={deckData: []}, action) {
 			...state,
 			deckData: state.deckData.map(deck => {
 				return deck.title === action.title 
-				? {...deck, ...action.perc}
+				? {...deck, perc: action.perc} 
 				: {...deck}
 			})
 		}

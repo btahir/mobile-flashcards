@@ -4,6 +4,18 @@
         />
 
                         <TouchableOpacity onPress={() => this.setState((prevState) => ({counter: prevState.counter + 1}))} ><Text>TEST</Text></TouchableOpacity>
+
+
+                        this.props.dispatch(AddQuizResults(this.props.data.title,this.state.result))
+
+
+
+            const newResult = Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2);
+            console.log(newResult);
+            this.setState({ result: newResult });
+
+
+            
     // const dummyData = {
     //   React: {
     //     title: 'React',

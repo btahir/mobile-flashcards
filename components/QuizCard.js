@@ -50,10 +50,11 @@ class QuizCard extends React.Component {
 			position, 
 			counter: 0, 
 			flip: false,
-			noCorrect: 0, };
+			noCorrect: 0,
+			result: -1, };
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps(nextProps, nextState) {
 		if (nextProps.data !== this.props.data) {
 			this.setState({ counter: 0 });
 		}
@@ -73,6 +74,15 @@ class QuizCard extends React.Component {
 		UIManager.setLayoutAnimationEnabledExperimental(true);
 
 		LayoutAnimation.spring();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if(prevState.counter === prevProps.data.questions.length) {
+			console.log("here");
+			// prevProps.dispatch(AddQuizResults(prevProps.data.title,1));
+			// return this.renderNoMoreCards(1000);
+
+		}
 	}
 
 	forceSwipe(direction) {
@@ -132,11 +142,11 @@ class QuizCard extends React.Component {
   	)
   }
 
-  renderNoMoreCards() {
+  renderNoMoreCards(result) {
   	return (
   		<Card title="Finished Quiz!">
   			<Text style={styles.cardText}>
-  				{`You Scored ${Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2)}%!`}
+  				{`You Scored ${result}%!`}
   			</Text>
   			<Button
   				title='Restart Quiz'
@@ -148,7 +158,8 @@ class QuizCard extends React.Component {
 
 	renderCards() {
 		if(this.state.counter >= this.props.data.questions.length) {
-			return this.renderNoMoreCards();
+			const result = Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2);
+			return this.renderNoMoreCards(result);
 		}
 
 		return this.props.data.questions.map((item,index) => {
@@ -199,10 +210,4 @@ const styles = StyleSheet.create({
   },
 })
 
-function mapStateToProps(state) {
-  return {
-    deckData: state.decks.deckData
-  }
-}
-
-export default connect(mapStateToProps)(QuizCard)
+export default connect()(QuizCard)
