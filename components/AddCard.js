@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput } from 'react-native'
+import { StyleSheet, Text, View, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import { AddNewCard } from '../actions'
 import { updateDeck } from '../utils/api'
@@ -11,6 +11,10 @@ class AddCard extends React.Component {
 		question: '',
 		answer: '',
 	}
+
+	// componentWillMount() {
+	// 	this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+	// }
 
   static navigationOptions = ({ navigation }) => {
   	return {
@@ -56,6 +60,7 @@ class AddCard extends React.Component {
 	  	this.qInput.clearText();
 	  	this.aInput.clearText();
 	  	// go back to Deck
+	  	Keyboard.dismiss();
 	  	this.props.navigation.goBack();
 	  }
   } 

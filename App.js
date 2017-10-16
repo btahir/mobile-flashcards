@@ -43,7 +43,6 @@ const Tabs = TabNavigator({
 }, {
   tabBarPosition: 'bottom',
   tabBarOptions: {
-    // activeTintColor: 'purple',
     labelStyle: {
       fontSize: 12,
       color: 'gray',
@@ -52,8 +51,6 @@ const Tabs = TabNavigator({
     },
     style: {
       height: 56,
-      marginBottom: 20,
-      borderWidth: 2,
       borderColor: 'gray',
       backgroundColor: 'white',
       shadowColor: 'rgba(0, 0, 0, 0.24)',
@@ -73,7 +70,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: '#778899',
+        backgroundColor: 'gray',
       },
     },
   },
@@ -82,7 +79,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: '#778899',
+        backgroundColor: 'gray',
       }
     },
   },
@@ -91,7 +88,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: '#778899',
+        backgroundColor: 'gray',
       }
     },
   },
