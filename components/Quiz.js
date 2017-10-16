@@ -11,36 +11,23 @@ class Quiz extends React.Component {
   		title: 'Start Quiz'
   	}
   }
-
   getDeck() {
   	return this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
-  }
-
-  renderQuizCard(item, index, totalLength) {
-  	return (
-  		<Card
-  			key={item.question}
-  			title={`${String(index)}/${String(totalLength)}`}
-  		>
-  			<Text style={{ marginBottom:10 }}>more text here</Text>
-  			<Button
-  				title={item.question}
-  				backgroundColor="#03A9F4"
-  			/>
-  		</Card>
-  	)
   }
 
   renderNoMoreCards() {
   	return (
   		<Card title="Finished Quiz!">
-  			<Text style={{ marginBottom:10, textAlign: 'center' }}>
+  			<Text style={styles.cardText}>
   				You Scored XX%!
   			</Text>
+  			<Button
+  				title='Restart Quiz'
+  				backgroundColor="#03A9F4"
+  			/>
   		</Card>
   	)
   }
-
 
 	render() {
 		const deck = this.getDeck();
@@ -55,7 +42,6 @@ class Quiz extends React.Component {
 					<View style={styles.cardView}>
 						<QuizCard
 							data={deck.questions}
-							renderCard={this.renderQuizCard}
 							renderNoMoreCards={this.renderNoMoreCards}
 						/>
 					</View>
@@ -79,6 +65,10 @@ const styles = StyleSheet.create({
 	mainText: {
 		textAlign: 'center',
 		fontSize: 36,
+	},
+	cardText: {
+		marginBottom:10,
+		textAlign: 'center',
 	},
 	cardView: {
 		marginTop: 20,

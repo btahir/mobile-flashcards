@@ -10,6 +10,7 @@ import {
 	UIManager,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { Card, Button } from 'react-native-elements'
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
@@ -43,7 +44,7 @@ class QuizCard extends React.Component {
 			},
 		})
 
-		this.state = { panResponder, position, counter: 0 };
+		this.state = { panResponder, position, counter: 0, flip: false };
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -51,6 +52,11 @@ class QuizCard extends React.Component {
 			this.setState({ counter: 0 });
 		}
 	}
+
+
+  flipCard() {
+  	return this.setState((prevState) => ({flip: !prevState.flip}));
+  }
 
 	componentWillUpdate() {
 		UIManager.setLayoutAnimationEnabledExperimental &&
@@ -74,8 +80,6 @@ class QuizCard extends React.Component {
 		direction === 'right' ? onSwipeRight(item) : onSwipeLeft(item);
 		this.state.position.setValue({ x: 0, y: 0});
 		this.setState((prevState) => ({counter: prevState.counter + 1}));
-
-
 	}
 
 	resetPosition() {
@@ -97,6 +101,27 @@ class QuizCard extends React.Component {
 		};
 	}
 
+  renderCardContent(item, index, totalLength) {
+  	return (
+  		<Card
+  			key={index}
+  			title={`${String(index)}/${String(totalLength)}`}
+  		>
+  			<View>
+  				{this.state.flip === false 
+  					? <Text style={styles.cardText}>{item.question}</Text>
+  				  : <Text style={styles.cardText}>{item.answer}</Text>
+  				}
+  			</View>
+  			<Button
+  				onPress={() => this.flipCard() }
+  				title={this.state.flip === false ? 'See Answer' : 'See Question'}
+  				backgroundColor="#03A9F4"
+  			/>
+  		</Card>
+  	)
+  }
+
 	renderCards() {
 		if(this.state.counter >= this.props.data.length) {
 			return this.props.renderNoMoreCards();
@@ -106,12 +131,13 @@ class QuizCard extends React.Component {
 			if(index < this.state.counter) {
 				return null;
 			} else if(index === this.state.counter) {
-				return (<Animated.View
-									key={index}
-									style={[this.getCardStyle(),styles.getCardStyle]}
-									{...this.state.panResponder.panHandlers}
-								>{this.props.renderCard(item,index+1, this.props.data.length)}
-								</Animated.View>
+				return (
+					<Animated.View
+					key={index}
+					style={[this.getCardStyle(),styles.getCardStyle]}
+					{...this.state.panResponder.panHandlers}
+					>{this.renderCardContent(item,this.state.counter+1, this.props.data.length)}
+					</Animated.View>
 				);
 			}
 			return (
@@ -119,14 +145,14 @@ class QuizCard extends React.Component {
 					key={index} 
 					style={[styles.cardStyle, { top: 10 * (index - this.state.counter) }]}
 				>
-					{this.props.renderCard(item)}
+					{this.renderCardContent(item,this.state.counter+1, this.props.data.length)}
 				</Animated.View>
 			)
 		}).reverse();
 	}
 
-
 	render() {
+		// console.log(this.props)
 		return (
 			<View style={styles.container}>
 				{this.renderCards()}
@@ -136,15 +162,17 @@ class QuizCard extends React.Component {
 }
 
 const styles = StyleSheet.create({
-	// container: {
-	// 	alignItems: 'center',
-	// 	justifyContent: 'center',
-	// },
 	cardStyle: {
 		position: 'absolute',
 		width: SCREEN_WIDTH,
-
-	}
+	},
+  cardText: {
+    marginBottom:10,
+    textAlign: 'center',
+  },
+  cardView: {
+    marginTop: 20,
+  },
 })
 
 export default connect()(QuizCard)
