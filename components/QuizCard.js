@@ -69,13 +69,6 @@ class QuizCard extends React.Component {
   	this.setState((prevState) => ({ noCorrect: prevState.noCorrect + 1 }))
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  // 	if(nextState.counter >= nextProps.data.questions.length) {
-  // 		return false
-  // 	}
-  // 	return true
-  // }
-
 	componentWillUpdate(prevProps, prevState) {
 		// For Android
 		UIManager.setLayoutAnimationEnabledExperimental &&
@@ -83,24 +76,6 @@ class QuizCard extends React.Component {
 
 		LayoutAnimation.spring();
 	}
-
-	// componentDidUpdate(prevProps, prevState) {
-	// 	if(prevState.counter === prevProps.data.questions.length) {
-	// 		prevProps.dispatch(AddQuizResults(prevProps.data.title,0.5));
-	// 		const newDeck = this.props.deckData.filter(deck => deck.title === this.props.data.title)[0];
-	// 		const title = newDeck.title;
-	// 		addQuiz({title, newDeck});
-
-	// 	}
-	// }
-
-	// componentWillMount() {
-	// 	if(this.state.counter >= this.props.data.questions.length) {
-	// 		const result = Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2);
-	// 		this.props.dispatch(AddQuizResults(this.props.data.title,0.5));
-	// 		return this.renderNoMoreCards(result);
-	// 	}
-	// }
 
 	forceSwipe(direction) {
 		const x = direction === 'right' ? SCREEN_WIDTH : -SCREEN_WIDTH;

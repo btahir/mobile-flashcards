@@ -28,15 +28,6 @@ function decks (state={deckData: []}, action) {
 				: {...deck}
 			})
 		}
-		// case ADD_QUIZ :
-		// return {
-		// 	...state,
-		// 	deckData: state.deckData.map(deck => {
-		// 		return deck.title === action.title 
-		// 		? {...deck, perc: action.perc} 
-		// 		: {...deck}
-		// 	})
-		// }
 		default :
 			return state
 	}
@@ -64,7 +55,7 @@ function quizArray(results, action) {
 					ind = true;
 					return {title: action.title, Score: action.perc}
 				} else {
-				  return {title: deck.title, Score: deck.Score}   //results.concat({ title: action.title, Score: action.perc })
+				  return {title: deck.title, Score: deck.Score}
 				}})
 	if(!ind) {
 		return results.concat({ title: action.title, Score: action.perc })

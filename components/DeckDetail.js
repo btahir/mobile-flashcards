@@ -3,7 +3,6 @@ import AddCard from './AddCard'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
-// import { receiveOneDeck } from '../actions'
 
 class DeckDetail extends React.Component {
 
