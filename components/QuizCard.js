@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux'
 import { Card, Button } from 'react-native-elements'
 import { AddQuizResults } from '../actions'
-import { addQuiz } from '../utils/api'
+import { updateDeck } from '../utils/api'
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
@@ -159,7 +159,7 @@ class QuizCard extends React.Component {
 			const result = Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2);
 			const title = this.props.data.title;
 			const newDeck = {...this.props.data, perc:result};
-			addQuiz({title, newDeck});
+			updateDeck({title, newDeck});
 			return this.renderNoMoreCards(result);
 		} else if(this.state.counter < this.props.data.questions.length) {
 			return this.props.data.questions.map((item,index) => {

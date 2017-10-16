@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { AddNewCard } from '../actions'
-import { saveNewCard } from '../utils/api'
+import { updateDeck } from '../utils/api'
 import { Button, FormLabel, FormInput } from 'react-native-elements'
 
 class AddCard extends React.Component {
@@ -54,7 +54,7 @@ class AddCard extends React.Component {
 	  	// add new deck to store
 	  	this.props.dispatch(AddNewCard(newCard));
 	  	// save to AsyncStorage
-	  	saveNewCard({title, newDeck});
+	  	updateDeck({title, newDeck});
 	  	// reset form
 	  	this.setState({ question: '', answer: '' });
 	  	this.qInput.clearText();
