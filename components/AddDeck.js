@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { AddNewDeck } from '../actions'
 import { saveDeckTitle } from '../utils/api'
+import { Button } from 'react-native-elements'
 
 class AddDeck extends React.Component {
   state = {
@@ -48,9 +49,13 @@ class AddDeck extends React.Component {
 					onChangeText={this.handleTextChange}
 					value={input}
 				/>
-        <TouchableOpacity onPress={() => this.sbmtDeck(input)} style={styles.sbmtButton}>
-          <Text style={styles.btnText}>Add Deck</Text>
-        </TouchableOpacity>
+        <Button 
+        	onPress={() => this.sbmtDeck(input)}
+	        title={"Add"}
+	        backgroundColor="#03A9F4"
+	        icon={{name: 'add'}}
+        >
+        </Button>
 			</View>
 		)
 	}
@@ -69,6 +74,7 @@ const styles = StyleSheet.create({
 		fontSize: 36,
 		flexWrap: 'wrap',
 		textAlign: 'center',
+		marginTop: 30,
 	},
 	textInput: {
 		width: 200,
@@ -78,23 +84,6 @@ const styles = StyleSheet.create({
 		margin: 50,
 		borderColor: 'gray',
 	},
-  sbmtButton: {
-    flexDirection: 'row',
-    backgroundColor: 'black',
-    padding: 10,
-    borderRadius: 12,
-    height: 45,
-    alignContent: 'center',
-    marginRight: 60,
-    marginLeft: 60,
-    marginBottom: 80,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  btnText: {
-    color: 'white',
-    fontSize: 22,
-  },
 })
 
 export default connect()(AddDeck)

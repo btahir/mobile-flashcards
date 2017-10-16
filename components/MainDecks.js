@@ -6,6 +6,7 @@ import { StackNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { receiveDecks } from '../actions'
 import { getDecks } from '../utils/api'
+import { Button } from 'react-native-elements'
 
 class MainDecks extends React.Component {
 	state = {
@@ -13,14 +14,7 @@ class MainDecks extends React.Component {
 	}
 
   componentDidMount() {
-    this._getFont().done();
     this._loadInitialState().done();
-  }
-
-  async _getFont() {
-    // get font
-    await Expo.Font.loadAsync('open-sans', require('../assets/OpenSans-Bold.ttf'));
-    this.setState({ fontLoaded: true });
   }
 
   async _loadInitialState() {
@@ -66,15 +60,13 @@ class MainDecks extends React.Component {
           )
         }
         <View style={styles.addButton}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('AddDeck')}>
-            {this.state.fontLoaded ? (
-              <Text             
-                style={[styles.btnText,{ fontFamily: 'open-sans' }]}>Add Deck</Text>
-              )
-              : (<Text
-                style={styles.btnText}>Add Deck</Text>
-              )}
-          </TouchableOpacity>
+          <Button 
+            onPress={() => this.props.navigation.navigate('AddDeck')}
+            title={"Add Deck"}
+            backgroundColor="#03A9F4"
+            icon={{name: 'add-to-list', type: 'entypo'}}
+          >
+          </Button>
         </View>
       </View>
 		)
@@ -133,22 +125,8 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   addButton: {
-    flexDirection: 'row',
-    backgroundColor: 'black',
-    padding: 10,
-    borderRadius: 12,
-    height: 45,
-    alignContent: 'center',
-    marginRight: 60,
-    marginLeft: 60,
     marginBottom: 80,
-    alignItems: 'center',
-    justifyContent: 'center'
   },
-  btnText: {
-    color: 'white',
-    fontSize: 22,
-  }
 });
 
 

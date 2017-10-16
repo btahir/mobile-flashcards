@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
+import { StyleSheet, Text, View, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { AddNewCard } from '../actions'
 import { saveNewCard } from '../utils/api'
+import { Button } from 'react-native-elements'
 
 class AddCard extends React.Component {
 
@@ -80,9 +81,13 @@ class AddCard extends React.Component {
 						value={answer}
 					/>
 				</View>
-        <TouchableOpacity onPress={() => this.sbmtCard(title, question, answer)} style={styles.sbmtButton}>
-          <Text style={styles.btnText}>Add Question</Text>
-        </TouchableOpacity>
+        <Button 
+        	onPress={() => this.sbmtCard(title, question, answer)}
+					title={"Add"}
+					backgroundColor="#03A9F4"
+					icon={{name: 'add'}} 
+        >
+        </Button>
 			</View>
 		)
 	}

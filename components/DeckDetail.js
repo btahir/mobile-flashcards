@@ -1,8 +1,9 @@
 import React from 'react'
 import AddCard from './AddCard'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { Button } from 'react-native-elements'
 
 class DeckDetail extends React.Component {
 
@@ -34,10 +35,14 @@ class DeckDetail extends React.Component {
 					<Text style={styles.title}>{deck.title}</Text>
 					<Text style={styles.subtitle}>{deck.questions.length} Cards</Text>
 					<View style={styles.btnView}>
-						<TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.dispatch(NavigationActions.back())} >
-							<Text style={styles.btnText}>Back To All Decks</Text>
-						</TouchableOpacity>
-						<Text>{this.getQuizResults(deck)}</Text>
+						<Button 
+							onPress={() => this.props.navigation.dispatch(NavigationActions.back())}
+							title={"Back To All Decks"}
+							backgroundColor="#03A9F4"
+							icon={{name: 'arrow-back'}} 
+						>
+						</Button>
+						<Text style={styles.quizText}>{this.getQuizResults(deck)}</Text>
 					</View>
 				</View>
 			</View>
@@ -67,20 +72,11 @@ const styles = StyleSheet.create({
 	btnView: {
     padding: 20,
 	},
-  btn: {
-    backgroundColor: 'black',
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    alignContent: 'center',
-    marginBottom: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-   btnText: {
-    color: 'white',
-    fontSize: 22,
-  },
+	quizText: {
+		marginTop: 20,
+		textAlign: 'center',
+		fontSize: 20,
+	},
 })
 
 function mapStateToProps(state) {
