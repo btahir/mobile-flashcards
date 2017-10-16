@@ -12,7 +12,7 @@ This is a Flash Cards app built with react native. You can create decks with car
 
 ## Installation Guide
 
-Make sure to be inside the root project directory. Run 'yarn install' to install all dependencies. Then run 'yarn start' to start the installation. You can then press either 'i' (for iPhone) or 'a' (for Android) depending on which simulator you want to run the app on. You can also generate a QR Code by pressing 'q' and test the app on your phone via the expo app.
+Make sure to be inside the root project directory. Run 'yarn install' to install all dependencies. Then run 'yarn start' to start the installation. This app has been tested on both iPhone and Android platforms. You can then press either 'i' (for iPhone) or 'a' (for Android) depending on which simulator you want to run the app on. You can also generate a QR Code by pressing 'q' and test the app on your phone via the expo app.
 
 ## License
 
