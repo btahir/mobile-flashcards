@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { AddNewCard } from '../actions'
 import { saveNewCard } from '../utils/api'
-import { Button } from 'react-native-elements'
+import { Button, FormLabel, FormInput } from 'react-native-elements'
 
 class AddCard extends React.Component {
 
@@ -55,6 +55,10 @@ class AddCard extends React.Component {
 	  	this.props.dispatch(AddNewCard(newCard));
 	  	// save to AsyncStorage
 	  	saveNewCard({title, newDeck});
+	  	// reset form
+	  	this.setState({ question: '', answer: '' });
+	  	this.qInput.clearText();
+	  	this.aInput.clearText();
 	  	// go back to Deck
 	  	this.props.navigation.goBack();
 	  }
@@ -66,26 +70,22 @@ class AddCard extends React.Component {
 		const { title } = this.props.navigation.state.params.deck;
 		return (
 			<View style={styles.container}>
-				<View>
-					<Text style={styles.text}>Add Your Question</Text>
-					<TextInput
-						style={styles.textInput}
-						onChangeText={this.handleQuestion}
-						value={question}
-					/>
-					<Text style={styles.text}>Add Your Answer</Text>
-					<TextInput
-						multiline={true}
-						style={[styles.textInput, {height: 100}]}
-						onChangeText={this.handleAnswer}
-						value={answer}
-					/>
+				<View style={{marginTop: 40}}>
+					<View style={styles.formView}>
+						<FormLabel labelStyle={{fontSize:20}}>Question</FormLabel>
+						<FormInput ref={input => this.qInput = input} onChangeText={this.handleQuestion}/>
+					</View>
+					<View style={styles.formView}>
+						<FormLabel labelStyle={{fontSize:20}}>Answer</FormLabel>
+						<FormInput ref={input => this.aInput = input} onChangeText={this.handleAnswer}/>
+					</View>
 				</View>
         <Button 
         	onPress={() => this.sbmtCard(title, question, answer)}
 					title={"Add"}
 					backgroundColor="#03A9F4"
 					icon={{name: 'add'}} 
+					style={{marginTop: 20}}
         >
         </Button>
 			</View>
@@ -101,41 +101,9 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     backgroundColor: 'white',
 	},
-	text: {
-		fontSize: 36,
-		textAlign: 'auto',
-		marginTop: 50,
-		marginBottom: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+	formView: {
+		alignItems: 'center',
 	},
-	textInput: {
-		fontSize: 24,
-		width: 'auto',
-		height: 40,
-		padding: 8,
-		borderRadius: 7,
-		borderWidth: 1,
-		borderColor: 'gray',
-		marginBottom: 50,
-	},
-  sbmtButton: {
-    flexDirection: 'row',
-    backgroundColor: 'black',
-    padding: 10,
-    borderRadius: 12,
-    height: 45,
-    alignContent: 'center',
-    marginRight: 60,
-    marginLeft: 60,
-    marginBottom: 80,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  btnText: {
-    color: 'white',
-    fontSize: 22,
-  },
 })
 
 function mapStateToProps(state) {
