@@ -80,6 +80,7 @@ class QuizCard extends React.Component {
 		direction === 'right' ? onSwipeRight(item) : onSwipeLeft(item);
 		this.state.position.setValue({ x: 0, y: 0});
 		this.setState((prevState) => ({counter: prevState.counter + 1}));
+		this.setState({flip: false});
 	}
 
 	resetPosition() {
