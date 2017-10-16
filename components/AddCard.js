@@ -39,18 +39,14 @@ class AddCard extends React.Component {
 	  		question,
 	  		answer,
 	  	}
-
 	  	let newDeck = ''
 	  	let key = ''
-
 	  	this.props.deckData.map((deck,index) => {
 	  		if(deck.title === title) {
 	  			newDeck = {title: deck.title, questions: deck.questions.concat({question,answer})};
 		  		key = index;
 	  		}
 	  	});
-
-	  	// console.log(newDeck, key);
 	  	// add new deck to store
 	  	this.props.dispatch(AddNewCard(newCard));
 	  	// save to AsyncStorage
