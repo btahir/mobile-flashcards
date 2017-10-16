@@ -145,8 +145,10 @@ class QuizCard extends React.Component {
   				{`You Scored ${result}%!`}
   			</Text>
   			<Button
+  				onPress={() => this.setState({ counter: 0, noCorrect: 0 }) }
   				title='Restart Quiz'
   				backgroundColor="#03A9F4"
+  				icon={{name: 'refresh'}} 
   			/>
   		</Card>
   	)
