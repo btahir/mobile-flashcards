@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import QuizCard from './QuizCard'
 import { Card, Button } from 'react-native-elements'
@@ -17,7 +17,6 @@ class Quiz extends React.Component {
 
 	render() {
 		const deck = this.getDeck();
-		// console.log(deck);
 		return(
 			<View style={styles.container}>
 				{deck.questions.length === 0 ? 

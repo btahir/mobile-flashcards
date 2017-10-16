@@ -42,8 +42,6 @@ class MainDecks extends React.Component {
 	render() {
     console.ignoredYellowBox = ['VirtualizedList: missing keys for items, make sure to specify a key property on each item or provide a custom keyExtractor.'];
     const deckData = this.props.deckData;
-    // console.log("render",this.props);
-
 		return (
       <View style={styles.container}>
         <Text style={styles.title}>Mobile Flash Cards</Text>
@@ -89,7 +87,6 @@ function Decks ({deck, navProps}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: Constants.statusBarHeight,
     backgroundColor: 'white',
   },
   list: {
