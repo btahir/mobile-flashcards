@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux'
 import { Card, Button } from 'react-native-elements'
 import { AddQuizResults } from '../actions'
+import { addQuiz } from '../utils/api'
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
@@ -51,7 +52,7 @@ class QuizCard extends React.Component {
 			counter: 0, 
 			flip: false,
 			noCorrect: 0,
-			result: -1, };
+		};
 	}
 
 	componentWillReceiveProps(nextProps, nextState) {
@@ -68,7 +69,14 @@ class QuizCard extends React.Component {
   	this.setState((prevState) => ({ noCorrect: prevState.noCorrect + 1 }))
   }
 
-	componentWillUpdate() {
+  // shouldComponentUpdate(nextProps, nextState) {
+  // 	if(nextState.counter >= nextProps.data.questions.length) {
+  // 		return false
+  // 	}
+  // 	return true
+  // }
+
+	componentWillUpdate(prevProps, prevState) {
 		// For Android
 		UIManager.setLayoutAnimationEnabledExperimental &&
 		UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -76,14 +84,23 @@ class QuizCard extends React.Component {
 		LayoutAnimation.spring();
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		if(prevState.counter === prevProps.data.questions.length) {
-			console.log("here");
-			// prevProps.dispatch(AddQuizResults(prevProps.data.title,1));
-			// return this.renderNoMoreCards(1000);
+	// componentDidUpdate(prevProps, prevState) {
+	// 	if(prevState.counter === prevProps.data.questions.length) {
+	// 		prevProps.dispatch(AddQuizResults(prevProps.data.title,0.5));
+	// 		const newDeck = this.props.deckData.filter(deck => deck.title === this.props.data.title)[0];
+	// 		const title = newDeck.title;
+	// 		addQuiz({title, newDeck});
 
-		}
-	}
+	// 	}
+	// }
+
+	// componentWillMount() {
+	// 	if(this.state.counter >= this.props.data.questions.length) {
+	// 		const result = Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2);
+	// 		this.props.dispatch(AddQuizResults(this.props.data.title,0.5));
+	// 		return this.renderNoMoreCards(result);
+	// 	}
+	// }
 
 	forceSwipe(direction) {
 		const x = direction === 'right' ? SCREEN_WIDTH : -SCREEN_WIDTH;
@@ -100,6 +117,10 @@ class QuizCard extends React.Component {
 		this.state.position.setValue({ x: 0, y: 0});
 		this.setState((prevState) => ({counter: prevState.counter + 1}));
 		this.setState({flip: false});
+		if(this.state.counter >= this.props.data.questions.length) {
+			const result = Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2);
+			this.props.dispatch(AddQuizResults(this.props.data.title,result));
+		}
 	}
 
 	resetPosition() {
@@ -159,31 +180,34 @@ class QuizCard extends React.Component {
 	renderCards() {
 		if(this.state.counter >= this.props.data.questions.length) {
 			const result = Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2);
+			const title = this.props.data.title;
+			const newDeck = {...this.props.data, perc:result};
+			addQuiz({title, newDeck});
 			return this.renderNoMoreCards(result);
-		}
-
-		return this.props.data.questions.map((item,index) => {
-			if(index < this.state.counter) {
-				return null;
-			} else if(index === this.state.counter) {
+		} else if(this.state.counter < this.props.data.questions.length) {
+			return this.props.data.questions.map((item,index) => {
+				if(index < this.state.counter) {
+					return null;
+				} else if(index === this.state.counter) {
+					return (
+						<Animated.View
+						key={index}
+						style={[this.getCardStyle(),styles.getCardStyle]}
+						{...this.state.panResponder.panHandlers}
+						>{this.renderCardContent(item,this.state.counter+1, this.props.data.questions.length)}
+						</Animated.View>
+					);
+				}
 				return (
-					<Animated.View
-					key={index}
-					style={[this.getCardStyle(),styles.getCardStyle]}
-					{...this.state.panResponder.panHandlers}
-					>{this.renderCardContent(item,this.state.counter+1, this.props.data.questions.length)}
+					<Animated.View 
+						key={index} 
+						style={[styles.cardStyle, { top: 10 * (index - this.state.counter) }]}
+					>
+						{this.renderCardContent(item,this.state.counter+1, this.props.data.questions.length)}
 					</Animated.View>
-				);
-			}
-			return (
-				<Animated.View 
-					key={index} 
-					style={[styles.cardStyle, { top: 10 * (index - this.state.counter) }]}
-				>
-					{this.renderCardContent(item,this.state.counter+1, this.props.data.questions.length)}
-				</Animated.View>
-			)
-		}).reverse();
+				)
+			}).reverse();
+		}
 	}
 
 	render() {
@@ -210,4 +234,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(QuizCard)
+function mapStateToProps(state) {
+  return {
+    deckData: state.decks.deckData
+  }
+}
+
+export default connect(mapStateToProps)(QuizCard)

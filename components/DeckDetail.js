@@ -17,6 +17,15 @@ class DeckDetail extends React.Component {
   	return this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
   }
 
+  getQuizResults(deck) {
+  	let results = this.props.quiz.results.filter(res => res.title === deck.title)[0]
+  	if(results) {
+  		return `Last Quiz Score: ${results.Score}%`
+  	} else if(deck.perc) {
+  		return `Last Quiz Score: ${deck.perc}%`
+  	}
+  	return "You Have Not Taken A Quiz Yet"
+  }
 
 	render() {
 		const deck = this.getDeck();
@@ -29,11 +38,10 @@ class DeckDetail extends React.Component {
 						<TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.dispatch(NavigationActions.back())} >
 							<Text style={styles.btnText}>Back To All Decks</Text>
 						</TouchableOpacity>
+						<Text>{this.getQuizResults(deck)}</Text>
 					</View>
 				</View>
 			</View>
-
-
 		)
 	}
 }
@@ -78,7 +86,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    deckData: state.decks.deckData
+    deckData: state.decks.deckData,
+    quiz: state.quiz
   }
 }
 

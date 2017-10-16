@@ -19,3 +19,12 @@ export function saveNewCard ({ title, newDeck }) {
 export function getDecks () {
 	return AsyncStorage.getItem(DECK_STORAGE_KEY)
 }
+
+export function addQuiz ({ title, newDeck }) {
+  return AsyncStorage.getItem(DECK_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results)
+      data[title] = newDeck
+      AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
+    })
+}
