@@ -73,7 +73,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: 'black',
+        backgroundColor: '#778899',
       },
     },
   },
@@ -82,7 +82,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: 'black',
+        backgroundColor: '#778899',
       }
     },
   },
@@ -91,7 +91,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: 'black',
+        backgroundColor: '#778899',
       }
     },
   },
