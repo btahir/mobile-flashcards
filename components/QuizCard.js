@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { Card, Button } from 'react-native-elements'
+import { AddQuizResults } from '../actions'
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
@@ -44,7 +45,12 @@ class QuizCard extends React.Component {
 			},
 		})
 
-		this.state = { panResponder, position, counter: 0, flip: false };
+		this.state = { 
+			panResponder, 
+			position, 
+			counter: 0, 
+			flip: false,
+			noCorrect: 0, };
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -53,12 +59,16 @@ class QuizCard extends React.Component {
 		}
 	}
 
-
   flipCard() {
   	return this.setState((prevState) => ({flip: !prevState.flip}));
   }
 
+  onSwipeRight(title) {
+  	this.setState((prevState) => ({ noCorrect: prevState.noCorrect + 1 }))
+  }
+
 	componentWillUpdate() {
+		// For Android
 		UIManager.setLayoutAnimationEnabledExperimental &&
 		UIManager.setLayoutAnimationEnabledExperimental(true);
 
@@ -74,10 +84,9 @@ class QuizCard extends React.Component {
 	}
 
 	onSwipeComplete(direction) {
-		const { onSwipeRight, onSwipeLeft, data } = this.props;
-		const item = data[this.state.index]
+		const { data } = this.props;
 
-		direction === 'right' ? onSwipeRight(item) : onSwipeLeft(item);
+		direction === 'right' ? this.onSwipeRight(data.title) : null;
 		this.state.position.setValue({ x: 0, y: 0});
 		this.setState((prevState) => ({counter: prevState.counter + 1}));
 		this.setState({flip: false});
@@ -123,12 +132,26 @@ class QuizCard extends React.Component {
   	)
   }
 
+  renderNoMoreCards() {
+  	return (
+  		<Card title="Finished Quiz!">
+  			<Text style={styles.cardText}>
+  				{`You Scored ${Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2)}%!`}
+  			</Text>
+  			<Button
+  				title='Restart Quiz'
+  				backgroundColor="#03A9F4"
+  			/>
+  		</Card>
+  	)
+  }
+
 	renderCards() {
-		if(this.state.counter >= this.props.data.length) {
-			return this.props.renderNoMoreCards();
+		if(this.state.counter >= this.props.data.questions.length) {
+			return this.renderNoMoreCards();
 		}
 
-		return this.props.data.map((item,index) => {
+		return this.props.data.questions.map((item,index) => {
 			if(index < this.state.counter) {
 				return null;
 			} else if(index === this.state.counter) {
@@ -137,7 +160,7 @@ class QuizCard extends React.Component {
 					key={index}
 					style={[this.getCardStyle(),styles.getCardStyle]}
 					{...this.state.panResponder.panHandlers}
-					>{this.renderCardContent(item,this.state.counter+1, this.props.data.length)}
+					>{this.renderCardContent(item,this.state.counter+1, this.props.data.questions.length)}
 					</Animated.View>
 				);
 			}
@@ -146,7 +169,7 @@ class QuizCard extends React.Component {
 					key={index} 
 					style={[styles.cardStyle, { top: 10 * (index - this.state.counter) }]}
 				>
-					{this.renderCardContent(item,this.state.counter+1, this.props.data.length)}
+					{this.renderCardContent(item,this.state.counter+1, this.props.data.questions.length)}
 				</Animated.View>
 			)
 		}).reverse();
@@ -176,4 +199,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(QuizCard)
+function mapStateToProps(state) {
+  return {
+    deckData: state.decks.deckData
+  }
+}
+
+export default connect(mapStateToProps)(QuizCard)

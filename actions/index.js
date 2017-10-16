@@ -1,5 +1,5 @@
 export const RECEIVE_DECKS='RECEIVE_DECKS';
-// export const RECEIVE_ONE_DECK='RECEIVE_ONE_DECK';
+export const ADD_QUIZ='ADD_QUIZ';
 export const ADD_DECK='ADD_DECK';
 export const ADD_CARD='ADD_CARD';
 
@@ -10,12 +10,13 @@ export function receiveDecks(decks) {
 	}
 }
 
-// export function receiveOneDeck(title) {
-// 	return {
-// 		type: RECEIVE_ONE_DECK,
-// 		title,
-// 	}
-// }
+export function AddQuizResults(title, perc) {
+	return {
+		type: ADD_QUIZ,
+		title,
+		perc,
+	}
+}
 
 export function AddNewDeck(deck) {
 	return {

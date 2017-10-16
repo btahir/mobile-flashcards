@@ -15,20 +15,6 @@ class Quiz extends React.Component {
   	return this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
   }
 
-  renderNoMoreCards() {
-  	return (
-  		<Card title="Finished Quiz!">
-  			<Text style={styles.cardText}>
-  				You Scored XX%!
-  			</Text>
-  			<Button
-  				title='Restart Quiz'
-  				backgroundColor="#03A9F4"
-  			/>
-  		</Card>
-  	)
-  }
-
 	render() {
 		const deck = this.getDeck();
 		// console.log(deck);
@@ -41,8 +27,7 @@ class Quiz extends React.Component {
 				: (
 					<View style={styles.cardView}>
 						<QuizCard
-							data={deck.questions}
-							renderNoMoreCards={this.renderNoMoreCards}
+							data={deck}
 						/>
 					</View>
 					)

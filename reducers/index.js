@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import {
 	RECEIVE_DECKS,
-	// RECEIVE_ONE_DECK,
+	ADD_QUIZ,
 	ADD_DECK,
 	ADD_CARD,
 } from '../actions';
@@ -14,11 +14,6 @@ function decks (state={deckData: []}, action) {
 			...state,
 			deckData: [...state.deckData, ...action.decks],
 		}
-		// case RECEIVE_ONE_DECK :
-		// return {
-		// 	...state,
-		// 	deckData: state.deckData.filter(deck => deck.title === action.title),
-		// }
 		case ADD_DECK :
 		return {
 			...state,
@@ -30,6 +25,15 @@ function decks (state={deckData: []}, action) {
 			deckData: state.deckData.map(deck => {
 				return deck.title === action.title 
 				? {title: deck.title, questions: deck.questions.concat({question:action.question, answer: action.answer})} 
+				: {...deck}
+			})
+		}
+		case ADD_QUIZ :
+		return {
+			...state,
+			deckData: state.deckData.map(deck => {
+				return deck.title === action.title 
+				? {...deck, ...action.perc}
 				: {...deck}
 			})
 		}
