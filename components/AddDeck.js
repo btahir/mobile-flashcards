@@ -12,7 +12,7 @@ class AddDeck extends React.Component {
 
   static navigationOptions = () => {
   	return {
-  		title: 'Add Deck'
+  		title: 'Create Deck'
   	}
   }
 
@@ -47,10 +47,10 @@ class AddDeck extends React.Component {
 				<FormInput onChangeText={this.handleTextChange}/>
         <Button 
         	onPress={() => this.sbmtDeck(input)}
-	        title={"Add"}
+	        title={"Create Deck"}
 	        style={{marginTop: 20}}
 	        backgroundColor="#03A9F4"
-	        icon={{name: 'add'}}
+	        icon={{name: 'create'}}
         >
         </Button>
 			</View>
