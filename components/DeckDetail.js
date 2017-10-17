@@ -62,7 +62,7 @@ class DeckDetail extends React.Component {
 							title={"Delete Deck"}
 							backgroundColor="#FF0000"
 							icon={{name: 'delete'}}
-							style={{marginTop: 10}}
+							style={{marginTop: 20}}
 						>
 						</Button>
 						<Text style={styles.quizText}>{this.getQuizResults(deck)}</Text>

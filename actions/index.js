@@ -27,7 +27,6 @@ export function AddNewDeck(deck) {
 }
 
 export function DeleteDeck(title) {
-	console.log(title)
 	return {
 		type: DELETE_DECK,
 		title,
