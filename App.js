@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Platform, StatusBar } from 'react-native'
 import MainDecks from './components/MainDecks'
 import AddDeck from './components/AddDeck'
 import AddCard from './components/AddCard'
@@ -93,6 +93,11 @@ const MainNavigator = StackNavigator({
       }
     },
   },
+},
+{
+  cardStyle: {
+    paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
+  }
 })
 
 export default class App extends React.Component {
