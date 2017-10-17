@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import { Card, Button } from 'react-native-elements'
 import { AddQuizResults } from '../actions'
 import { updateDeck } from '../utils/api'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
@@ -159,7 +160,10 @@ class QuizCard extends React.Component {
 			const result = Math.round(this.state.noCorrect/this.props.data.questions.length * 100).toFixed(2);
 			const title = this.props.data.title;
 			const newDeck = {...this.props.data, perc:result};
+			// update AsyncStorage
 			updateDeck({title, newDeck});
+			// setup new push notifications
+			clearLocalNotification().then(setLocalNotification)
 			return this.renderNoMoreCards(result);
 		} else if(this.state.counter < this.props.data.questions.length) {
 			return this.props.data.questions.map((item,index) => {

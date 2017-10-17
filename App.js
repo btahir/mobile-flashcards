@@ -12,6 +12,7 @@ import reducer from './reducers'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons'
+import { setLocalNotification } from './utils/helpers'
 
 const store = createStore(reducer, composeWithDevTools(
   applyMiddleware(thunk),
@@ -95,6 +96,11 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification();
+  }
+
   render() {
     return (
       <Provider store={store}>
