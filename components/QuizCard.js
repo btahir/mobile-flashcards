@@ -121,7 +121,7 @@ class QuizCard extends React.Component {
   renderCardContent(item, index, totalLength) {
   	return (
   		<Card
-  			key={index}
+  			key={item}
   			title={`${String(index)}/${String(totalLength)}`}
   		>
   			<View>
