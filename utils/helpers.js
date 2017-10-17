@@ -1,3 +1,4 @@
+// The code for Push notifications is largely inspired by the one presented in the course by Tyler for the UdaciFitness App.
 import { AsyncStorage } from 'react-native'
 import { Notifications, Permissions } from 'expo'
 
