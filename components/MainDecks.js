@@ -9,9 +9,6 @@ import { getDecks } from '../utils/api'
 import { Button } from 'react-native-elements'
 
 class MainDecks extends React.Component {
-	state = {
-    fontLoaded: false,
-	}
 
   componentDidMount() {
     this._loadInitialState().done();

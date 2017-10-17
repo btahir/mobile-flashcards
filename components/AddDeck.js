@@ -6,14 +6,15 @@ import { saveDeckTitle } from '../utils/api'
 import { Button, FormLabel, FormInput } from 'react-native-elements'
 
 class AddDeck extends React.Component {
-  state = {
-  	input: ''
-  }
-
+  
   static navigationOptions = () => {
   	return {
   		title: 'Create Deck'
   	}
+  }
+
+ 	state = {
+  	input: ''
   }
 
   handleTextChange = (input) => {
