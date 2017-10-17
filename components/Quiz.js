@@ -25,14 +25,13 @@ class Quiz extends React.Component {
 			<View style={styles.container}>
 				{deck.questions.length === 0 ? 
 					(	<View style={styles.altContainer}>
-						<Text style={styles.mainText}>You need to add at least one card to start the quiz!</Text>
+							<Text style={styles.mainText}>You need to add at least one card to start the quiz!</Text>
 						</View>)
 				: (
-					<View style={styles.cardView}>
-						<QuizCard
-							data={deck}
-						/>
-					</View>
+					<QuizCard
+						data={deck}
+						style={styles.cardView}
+					/>
 					)
 				}
 			</View>
@@ -59,6 +58,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	cardView: {
+		flex: 1,
 		marginTop: 20,
 	},
 })

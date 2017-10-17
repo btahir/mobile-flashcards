@@ -11,7 +11,7 @@ import {
 	UIManager,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { Card, Button } from 'react-native-elements'
+import { Card, Button, Icon } from 'react-native-elements'
 import { AddQuizResults } from '../actions'
 import { updateDeck } from '../utils/api'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
@@ -195,13 +195,36 @@ class QuizCard extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				{this.renderCards()}
+				<View style={styles.cardView}>
+					{this.renderCards()}
+				</View>
+				<View style={styles.bottomView}>
+					<View style={styles.iconLeft}>
+						<Text style={styles.cardText}>Swipe Left</Text>
+						<Icon 
+							name='thumbs-o-down' 
+							type= 'font-awesome' 
+							onPress={() => alert('You Have To Swipe Left!')}
+						/>
+					</View>
+					<View style={styles.iconRight}>
+						<Text style={styles.cardText}>Swipe Right</Text>
+						<Icon 
+							name='thumbs-o-up' 
+							type= 'font-awesome' 
+							onPress={() => alert('You Have To Swipe Right!')}
+						/>
+					</View>
+				</View>
 			</View>
 		)
 	}
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
 	cardStyle: {
 		position: 'absolute',
 		width: SCREEN_WIDTH,
@@ -211,7 +234,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   cardView: {
-    marginTop: 20,
+    marginTop: 60,
+  },
+  bottomView: {
+  	flexDirection: 'row',
+  	flex: 1,
+  	alignItems: 'flex-end'
+  },
+  iconRight: {
+  	flex: 1,
+  	marginBottom: 20,
+    justifyContent: 'flex-end',
+  },
+  iconLeft: {
+  	flex: 1,
+  	marginBottom: 20,
+    justifyContent: 'flex-start',
   },
 })
 
