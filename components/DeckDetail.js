@@ -60,8 +60,9 @@ class DeckDetail extends React.Component {
 						<Button 
 							onPress={() => this.deleteDeck(deck)}
 							title={"Delete Deck"}
-							backgroundColor="#03A9F4"
-							icon={{name: 'arrow-back'}} 
+							backgroundColor="#FF0000"
+							icon={{name: 'delete'}}
+							style={{marginTop: 10}}
 						>
 						</Button>
 						<Text style={styles.quizText}>{this.getQuizResults(deck)}</Text>
