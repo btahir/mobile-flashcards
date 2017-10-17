@@ -4,6 +4,7 @@ import {
 	ADD_QUIZ,
 	ADD_DECK,
 	ADD_CARD,
+	DELETE_DECK,
 } from '../actions';
 
 
@@ -27,6 +28,11 @@ function decks (state={deckData: []}, action) {
 				? {title: deck.title, questions: deck.questions.concat({question:action.question, answer: action.answer})} 
 				: {...deck}
 			})
+		}
+		case DELETE_DECK :
+		return {
+			...state,
+			deckData: state.deckData.filter(deck => deck.title !== action.title),
 		}
 		default :
 			return state

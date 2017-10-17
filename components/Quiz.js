@@ -12,7 +12,11 @@ class Quiz extends React.Component {
   	}
   }
   getDeck() {
-  	return this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
+  	let tmp = this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
+  	if(tmp) {
+  		return tmp
+  	}
+  	return {title: '', questions:[]}
   }
 
 	render() {

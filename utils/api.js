@@ -20,3 +20,13 @@ export function updateDeck ({ title, newDeck }) {
 export function getDecks () {
 	return AsyncStorage.getItem(DECK_STORAGE_KEY)
 }
+
+export function removeDeck (title) {
+  return AsyncStorage.getItem(DECK_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results)
+      data[title] = undefined
+      delete data[title]
+      AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
+    })
+}

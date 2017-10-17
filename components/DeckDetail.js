@@ -4,6 +4,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import { Button } from 'react-native-elements'
+import { removeDeck } from '../utils/api'
+import { DeleteDeck } from '../actions'
 
 class DeckDetail extends React.Component {
 
@@ -14,7 +16,11 @@ class DeckDetail extends React.Component {
   }
 
   getDeck() {
-  	return this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
+  	let tmp = this.props.deckData.filter(deck => deck.title === this.props.navigation.state.params.deck.title)[0]
+  	if(tmp) {
+  		return tmp
+  	}
+  	return {title: '', questions:[]}
   }
 
   getQuizResults(deck) {
@@ -25,6 +31,15 @@ class DeckDetail extends React.Component {
   		return `Last Quiz Score: ${deck.perc}%`
   	}
   	return "You Have Not Taken A Quiz Yet"
+  }
+
+  deleteDeck(deck) {
+  	// remove from AsynStorage
+  	removeDeck(deck.title);
+  	// remove from state
+  	this.props.dispatch(DeleteDeck(deck.title));
+  	//go back
+  	this.props.navigation.dispatch(NavigationActions.back());
   }
 
 	render() {
@@ -38,6 +53,13 @@ class DeckDetail extends React.Component {
 						<Button 
 							onPress={() => this.props.navigation.dispatch(NavigationActions.back())}
 							title={"Back To All Decks"}
+							backgroundColor="#03A9F4"
+							icon={{name: 'arrow-back'}} 
+						>
+						</Button>
+						<Button 
+							onPress={() => this.deleteDeck(deck)}
+							title={"Delete Deck"}
 							backgroundColor="#03A9F4"
 							icon={{name: 'arrow-back'}} 
 						>
