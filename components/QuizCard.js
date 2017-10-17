@@ -1,3 +1,4 @@
+// The code to setup the Card and Swipe animations is inspired by Stephen Grider's course on Udemy: React Native: Advanced Concepts.
 import React from 'react'
 import { 
 	Text,
